@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siddhesh Sutar - Data Scientist Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #333333;
+            --light-gray: #666666;
+            --border-gray: #e0e0e0;
+            --bg-white: #ffffff;
+            --off-white: #f8f8f8;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            background: var(--bg-white);
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-black);
+            color: var(--bg-white);
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gray);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--medium-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-black);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--light-gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links a {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-black);
+            color: var(--bg-white);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section:nth-child(even) {
+            background: var(--off-white);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-black);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid var(--border-gray);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-black);
+        }
+
+        .skill-category h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-black);
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.4rem 0.8rem;
+            background: var(--primary-black);
+            color: var(--bg-white);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--border-gray);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-black);
+            border-radius: 50%;
+            border: 3px solid var(--bg-white);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .company {
+            color: var(--light-gray);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .date {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline-item li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .timeline-item li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: var(--primary-black);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .project-tech {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-black);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-left: 4px solid var(--primary-black);
+            border-radius: 5px;
+        }
+
+        .education-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-item .school {
+            color: var(--light-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-item .date {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Certifications */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .cert-card {
+            padding: 1.5rem;
+            background: var(--primary-black);
+            color: var(--bg-white);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-black);
+            color: var(--bg-white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--bg-white);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Analytics (Replace GA_MEASUREMENT_ID with your actual ID) -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">SS</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Siddhesh Sutar</h1>
+            <p class="subtitle">Data Scientist & ML Engineer</p>
+            <p class="description">
+                Passionate about leveraging AI and machine learning to solve complex problems. 
+                Specializing in Deep Learning, NLP, and Large Language Models with 3+ years of experience 
+                building production-ready ML systems.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:sidd.sutar1@gmail.com">📧 Email</a>
+                <a href="https://linkedin.com/in/siddhesh-sutar" target="_blank">💼 LinkedIn</a>
+                <a href="https://github.com/Siddhesh513" target="_blank">🐙 GitHub</a>
+                <a href="tel:7304205300">📱 Call</a>
+            </div>
+            <p style="color: var(--light-gray); font-style: italic;">📍 Mumbai, India | Currently at Asta CRS, New York</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About Me</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--medium-gray);">
+            I'm a Data Scientist with expertise in building scalable ML systems and deploying Large Language Models. 
+            Currently working at Asta CRS in New York, where I architect real-time inference systems and optimize 
+            foundation models for domain-specific tasks. My journey includes a Master's in Computer Science from 
+            University of Wisconsin Parkside with a concentration in Data Science.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--medium-gray); margin-top: 1rem;">
+            <strong>Fun fact:</strong> My best friend is a goldfish! 🐠
+        </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Languages</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C/C++</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Scala</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>ML/DL Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">Scikit-learn</span>
+                    <span class="skill-tag">Hugging Face</span>
+                    <span class="skill-tag">LangChain</span>
+                    <span class="skill-tag">OpenAI API</span>
+                    <span class="skill-tag">spaCY</span>
+                    <span class="skill-tag">NLTK</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Databases & Cloud</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Redis</span>
+                    <span class="skill-tag">AWS SageMaker</span>
+                    <span class="skill-tag">AWS Lambda</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">ElasticSearch</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Specializations</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">LLMs</span>
+                    <span class="skill-tag">RAG Systems</span>
+                    <span class="skill-tag">Fine-tuning</span>
+                    <span class="skill-tag">LoRA</span>
+                    <span class="skill-tag">BERT</span>
+                    <span class="skill-tag">GPT</span>
+                    <span class="skill-tag">LLaMA</span>
+                    <span class="skill-tag">MLOps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Data Scientist</h3>
+                <p class="company">Asta CRS, New York, NY</p>
+                <p class="date">August 2022 - Present</p>
+                <ul>
+                    <li>Architected real-time inference systems using FastAPI achieving sub-second model predictions with 99.9% uptime and 40% increase in data processing efficiency</li>
+                    <li>Launched Large Language Model applications using OpenAI GPT API and Hugging Face Transformers boosting automated content generation accuracy by 45%</li>
+                    <li>Optimized foundation models (BERT, GPT, LLaMA) for domain-specific tasks with 30% reduction in training resources using parameter-efficient LoRA techniques</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Data Analyst</h3>
+                <p class="company">Encryption Infotech, Mumbai, India</p>
+                <p class="date">May 2020 - June 2021</p>
+                <ul>
+                    <li>Built automated web scraping pipelines using Python (Scrapy, Selenium), extracting competitor data from 50+ websites</li>
+                    <li>Streamlined CRM customer analysis generating weekly reports, resulting in 30% increase in client evaluations</li>
+                    <li>Designed Power BI dashboards driving 3 new retention strategies that boosted client satisfaction by 15%</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>RAG System Implementation</h3>
+                <p class="project-tech">LangChain, Vector Databases, LLMs, Python</p>
+                <p>Implementation of Retrieval-Augmented Generation system for intelligent document search and question answering. Combines vector embeddings with large language models for accurate information retrieval.</p>
+                <a href="https://github.com/Siddhesh513/RAG" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Football Match Prediction</h3>
+                <p class="project-tech">Machine Learning, Sports Analytics, Python</p>
+                <p>Predictive modeling system for football match outcomes using historical data, team statistics, and advanced ML algorithms to forecast match results and performance metrics.</p>
+                <a href="https://github.com/Siddhesh513/Football-Prediction" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>MLOps Project</h3>
+                <p class="project-tech">MLflow, Docker, CI/CD, Model Deployment</p>
+                <p>End-to-end MLOps pipeline implementation showcasing model versioning, automated training, deployment, and monitoring in production environments with best practices.</p>
+                <a href="https://github.com/Siddhesh513/MLOps_project" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Washington Bike Demand Prediction</h3>
+                <p class="project-tech">Machine Learning, Deep Learning, Jupyter Notebook</p>
+                <p>Using different machine learning algorithms and deep learning to solve the issue of demand for Washington rental bikes so that people can receive their bike as they need.</p>
+                <a href="https://github.com/Siddhesh513/Washington-bike-demand-prediction" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Car Prices Prediction</h3>
+                <p class="project-tech">Regression Models, Machine Learning, Jupyter Notebook</p>
+                <p>Predicting the price of cars in the next few years using features such as car brand, model, year of manufacture. Using different regression models for accurate predictions.</p>
+                <a href="https://github.com/Siddhesh513/Car-Prices-Prediction" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Airbnb Home Price Predictions</h3>
+                <p class="project-tech">Machine Learning, Data Analysis, Jupyter Notebook</p>
+                <p>Using various machine learning techniques to predict housing prices from Airbnb data that would give most profit to property owners and investors.</p>
+                <a href="https://github.com/Siddhesh513/Airbnb-Home-Price-Predictions" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Twitter Sentiment Analysis</h3>
+                <p class="project-tech">NLP, Machine Learning, Text Mining, Jupyter Notebook</p>
+                <p>Using machine learning techniques and text extraction to predict the sentiment of text whether positive or negative. This ensures companies save significant amounts by automating sentiment analysis.</p>
+                <a href="https://github.com/Siddhesh513/Twitter-Sentiment-Analysis" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <h3>Predicting Readability of Texts</h3>
+                <p class="project-tech">Machine Learning, Text Analysis, Jupyter Notebook</p>
+                <p>The aim of this project is to predict the difficulty level of text using various machine learning techniques, helping in educational content optimization and accessibility.</p>
+                <a href="https://github.com/Siddhesh513/Predicting-Readability-of-Texts-Using-Machine-Learning" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section">
+        <h2 class="section-title">Education</h2>
+        <div class="education-item">
+            <h3>Master of Science - Computer Science</h3>
+            <p class="school">University of Wisconsin Parkside, Wisconsin, USA</p>
+            <p class="date">August 2021 - December 2022</p>
+            <p><strong>Concentration:</strong> Data Science</p>
+            <p><strong>Coursework:</strong> Data Structures & Algorithms, OOPS, Operating Systems, Probability & Statistics, DBMS</p>
+        </div>
+        <div class="education-item">
+            <h3>Bachelor of Technology - Computer Engineering</h3>
+            <p class="school">University of Mumbai, Mumbai, India</p>
+            <p class="date">June 2016 - August 2020</p>
+            <p><strong>Coursework:</strong> Machine Learning, Deep Learning, Cloud Computing, Statistical Modeling & Predictive Analytics, Artificial Intelligence</p>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="section">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+            <div class="cert-card">
+                <h4>Salesforce Administrator</h4>
+                <p>Salesforce - Feb 2023</p>
+            </div>
+            <div class="cert-card">
+                <h4>Fundamentals of Deep Learning</h4>
+                <p>NVIDIA - May 2022</p>
+            </div>
+            <div class="cert-card">
+                <h4>Advanced Google Analytics</h4>
+                <p>Google - Mar 2021</p>
+            </div>
+            <div class="cert-card">
+                <h4>Machine Learning Fast Track</h4>
+                <p>Google - Aug 2020</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <footer id="contact">
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Let's Connect</h2>
+        <p>I'm always interested in discussing new opportunities and interesting projects.</p>
+        <div class="footer-links">
+            <a href="mailto:sidd.sutar1@gmail.com">Email</a>
+            <a href="https://linkedin.com/in/siddhesh-sutar" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Siddhesh513" target="_blank">GitHub</a>
+        </div>
+        <p style="margin-top: 2rem; opacity: 0.7;">© 2025 Siddhesh Sutar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
+        });
+
+        // Add typing effect to hero title
+        const heroTitle = document.querySelector('.hero h1');
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        setTimeout(typeWriter, 500);
+
+        // Track custom events with Google Analytics (if needed)
+        function trackEvent(category, action, label) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    'event_category': category,
+                    'event_label': label
+                });
+            }
+        }
+
+        // Track clicks on important links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track GitHub link clicks
+            document.querySelectorAll('a[href*="github.com"]').forEach(link => {
+                link.addEventListener('click', () => trackEvent('Outbound Link', 'click', 'GitHub'));
+            });
+            
+            // Track LinkedIn link clicks
+            document.querySelectorAll('a[href*="linkedin.com"]').forEach(link => {
+                link.addEventListener('click', () => trackEvent('Outbound Link', 'click', 'LinkedIn'));
+            });
+            
+            // Track email clicks
+            document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+                link.addEventListener('click', () => trackEvent('Contact', 'click', 'Email'));
+            });
+        });
+    </script>
+</body>
+</html>
